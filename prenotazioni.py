@@ -1,5 +1,6 @@
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+
+from google.oauth2.service_account import Credentials
 import os
 
 # Definisce lo scope
@@ -21,7 +22,7 @@ creds_dict = {
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
 }
-creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
 
 # Autorizza il client con le credenziali
 client = gspread.authorize(creds)
@@ -38,3 +39,4 @@ def inserisci_ticket(nome_completo, telefono, email, tipo_cliente, motivo, urgen
     row_to_insert = [nome_completo, telefono, email, tipo_cliente, motivo, urgenza,data]
     sheet.append_row(row_to_insert)
     
+
